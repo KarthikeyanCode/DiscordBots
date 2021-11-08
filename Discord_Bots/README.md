@@ -1,0 +1,2 @@
+- Simple discord bot using python 
+- Can do basic stuff and entertain us
