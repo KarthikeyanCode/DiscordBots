@@ -1,4 +1,4 @@
-#Simple discord bot
+#API using python for discord bot
 from os import link
 import discord
 from discord.ext import commands
@@ -27,7 +27,9 @@ async def on_message(msg):
         1.hello
         2.life
         3.choose
-        4.rimage\n''')
+        4.rimage
+        5.roll_die
+        6.flip_coin\n''')
     else:
         await bot.process_commands(msg)
 
@@ -55,6 +57,11 @@ async def life(ctx):
 async def choose(ctx, *args):
     await ctx.send("Its better to {0}".format(random.choice(args)))
 
+@bot.command()
+async def cool(ctx, arg):
+    list_1 = ["Cool", "Not Cool"]
+    await ctx.send("{0} is {1}".format(arg, random.choice(list_1)))
+
 #link_var = "".join(random.choices(string.ascii_uppercase + string.digits, k = 7))
 # link_var = "random"
 # link = f"https://source.unsplash.com/1600x900/?{link_var}"
@@ -63,7 +70,6 @@ async def choose(ctx, *args):
 async def rimage(ctx):
     # response = requests.get("https://source.unsplash.com/random/800x600")
     # data = response.json()
-    #using unsplash opensource API
     async with aiohttp.ClientSession() as session:
         request = await session.get("https://source.unsplash.com/random")
         #print(request)
@@ -96,6 +102,20 @@ async def rimage(ctx):
     image.set_image(url = url)
     image.set_footer(text = "")
     await ctx.send(embed = image)
-    
+
+@bot.command()
+async def roll_die(ctx):
+    command_user = ctx.author.mention
+    async with ctx.typing():
+        await ctx.send("Rolling a die.. :game_die:")
+        await ctx.send("Result of your roll {0}: {1}".format(command_user,random.randint(1,6)))
+
+@bot.command()
+async def flip_coin(ctx):
+    command_user = ctx.author.mention
+    sample_space_coin = ["Head", "Tail"]
+    async with ctx.typing():
+        await ctx.send("Flipping a coin.. :coin:")
+        await ctx.send("Result of your flip {0}: {1}".format(command_user, random.choice(sample_space_coin)))
 
 bot.run('token')
