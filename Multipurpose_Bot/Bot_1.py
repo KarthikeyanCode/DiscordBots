@@ -15,11 +15,9 @@ import aiohttp
 import string
 import json
 from PIL import Image
-# client = discord.Client()
 
 bot = commands.Bot(command_prefix='$')
 client = discord.Client()
-#client = discord.Client()
 
 @bot.event
 async def on_ready():
@@ -58,22 +56,11 @@ async def cool(ctx, arg):
     list_1 = ["Cool", "Not Cool"]
     await ctx.send("{0} is {1}".format(arg, random.choice(list_1)))
 
-#link_var = "".join(random.choices(string.ascii_uppercase + string.digits, k = 7))
-# link_var = "random"
-# link = f"https://source.unsplash.com/1600x900/?{link_var}"
-
 @bot.command()
 async def rimage(ctx):
-    # response = requests.get("https://source.unsplash.com/random/800x600")
-    # data = response.json()
     async with aiohttp.ClientSession() as session:
         request = await session.get("https://source.unsplash.com/random")
-        #print(request)
-        #randomjson = await request.json(content_type="image/jpeg")
-        #url = json.loads(request)[0]["url"]a)
     request = str(request)
-    #print(request)
-    #Extracting the image url from GET response
     url = ""
     key = 0
     for var in request:
@@ -92,34 +79,18 @@ async def rimage(ctx):
         description = "",
         colour = discord.Colour.purple()
     )
-    # link_var = "random"
-    # link = f"https://source.unsplash.com/1600x900/?{link_var}"
-    #image.set_image(url = randomjson["link"])
     image.set_image(url = url)
     image.set_footer(text = "")
     await ctx.send(embed = image)
 
 @bot.command()
 async def rgif(ctx):
-    # image = discord.Embed(
-    #     title = "Random Image",
-    #     description = "",
-    #     colour = discord.Colour.purple()
-    # )
-    # # link_var = "random"
-    # # link = f"https://source.unsplash.com/1600x900/?{link_var}"
-    # #image.set_image(url = randomjson["link"])
-    # image.set_image(path = "D:\Discord_Bot\Resources\CoolMonke.gif")
-    # image.set_footer(text = "")
-    # await ctx.send(embed = image)
     gif_list = ["https://tenor.com/view/monke-monkey-monke-army-monke-swag-buy-gif-20219369", 
                 "https://tenor.com/view/cool-monkey-gangster-shades-on-swag-gif-15768048",
                 "https://tenor.com/view/david-monke-david-gaming-gaming-monke-gaming-gif-19468007",
                 "https://tenor.com/view/monke-monkey-discord-pfp-pfp-monkeys-gif-21010625",
                 "https://tenor.com/view/monkey-funny-monke-funny-monkey-monke-gif-22117277",
                 "https://tenor.com/view/swag-monkey-gang-gif-19286871"]
-    #u can add more gif links in this list
-    #u can also save them locally and send them as file using ctx.send(file=discord.File(path))
     await ctx.send(random.choice(gif_list))
 
 @bot.command()
